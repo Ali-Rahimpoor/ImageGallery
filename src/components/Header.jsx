@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { Context } from "../services/Context";
+import { useContext } from "react";
 const Header = ()=>{
-
+   const {setTitle} = useContext(Context);
    return(
       <header className="relative font-Karla">
          <div className="background"></div>
@@ -9,17 +11,17 @@ const Header = ()=>{
          </nav>
          <ul className="mt-5 w-[800px] mx-auto p-2 flex items-center justify-around ">
            <li className="group-li">
-               <Link to='/Gallery'>
+               <Link to='/Gallery' onClick={()=>setTitle('APOD')}>
                   APOD
                </Link>
            </li>
            <li className="group-li">
-               <Link to="/Gallery">
+               <Link to="/Gallery" onClick={()=>setTitle("EARTH")}>
                   EARTH
                </Link>
            </li>
            <li className="group-li">
-               <Link to='/Gallery'>
+               <Link to='/Gallery' onClick={()=> setTitle('MARS')}>
                      MARS
                </Link>
            </li>

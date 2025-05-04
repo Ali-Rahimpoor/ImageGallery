@@ -8,7 +8,18 @@ export const Get_APOD = (count=10)=>{
       params:{
          api_key:Nasa_api_KEY,
          count:count,
-         thumbs:true
       }
    })
+}
+export const Get_MARS = (rover="curiosity")=>{
+   const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/latest_photos`;
+   return axios.get(url,{
+      params:{
+         api_key:Nasa_api_KEY
+      }
+   });
+}
+export const Get_EARTH = (count=10)=>{
+   const url =  `https://picsum.photos/v2/list?page=1&limit=${count}`;
+   return axios.get(url);
 }
