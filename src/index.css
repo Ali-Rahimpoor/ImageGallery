@@ -19,6 +19,27 @@
     ul .group-li{
       @apply backdrop-blur-xs p-8 rounded-xs text-white text-4xl hover:opacity-90 transition-transform cursor-pointer hover:scale-110
     }
+    .modal{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: transparent;
+      padding: 0;
+      border: none;
+      outline: none;
+      max-width: 90vw;  
+      max-height: 90vh;   
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      z-index: 1000;
+   }
 }
 
 @font-face {
