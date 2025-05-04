@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { Get_APOD, Get_EARTH, Get_MARS } from "../services/NasaApi";
 import { Context } from "../services/Context";
-
+import Loading from "./Loading";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
-   
+   const [loading,setLoading] = useState(false);
    useEffect(()=>{
       const fetchAPODImages = async ()=>{
         try{
+            setLoading(true);
             const {data} = await Get_APOD(1);
-            console.log("APOD"+data)
+            console.log(data)
             const imageOnly =
              data.filter(item=> item.media_type === "image");
              setImages(imageOnly);
@@ -17,23 +18,34 @@ const NASAGallery = ()=>{
         }catch(err){
          console.error(err);
         }
+        finally{
+         setLoading(false)
+        }
       }
       const fetchMARSImages = async ()=>{
          try{
+            setLoading(true);
             const {data} = await Get_MARS();
-            console.log("MARS"+data);
+            console.log(data);
 
          }catch(err){
             console.error(err);
+         }
+         finally{
+            setLoading(false)
          }
         
       }
       const fetchEARTHImages = async ()=>{
          try{
+            setLoading(true);
             const {data} = await Get_EARTH();
             console.log(data);
          }catch(err){
             console.error(err)
+         }
+         finally{
+            setLoading(false)
          }
 
       }
@@ -52,8 +64,14 @@ const NASAGallery = ()=>{
       }
    },[])
 
+   if(loading) return <Loading/>
    return(
       <>
+         <section>
+
+         </section>
+
+
          {/* {images.map((img)=> (
             <div>
                <p>{img.date}</p>
