@@ -6,6 +6,20 @@
     padding-inline: 2rem;
   }
 }
+@layer components{
+    .background{
+      background-image: url('./assets/Image/pexels-pixabay-2150.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      object-fit: cover;
+      background-attachment: fixed; 
+      @apply absolute top-0 left-0 right-0 w-full h-70 -z-10
+    }
+    ul .group-li{
+      @apply backdrop-blur-xs p-8 rounded-xs text-white text-4xl hover:opacity-90 transition-transform cursor-pointer hover:scale-110
+    }
+}
 
 @font-face {
   font-family: Karla;
@@ -31,6 +45,10 @@
   font-family: RobotoLight;
   src: url('./assets/font/Roboto/Roboto-Light.ttf') format('truetype');
 }
+@font-face {
+  font-family: Londrina;
+  src: url('./assets/font/Londrina/LondrinaSolid-Light.ttf');
+}
 @theme{
   --font-Karla:Karla;
   --font-KarlaBold:KarlaBold;
@@ -38,4 +56,5 @@
   --font-RobotoBold:RobotoBold;
   --font-RobotoLight:RobotoLight;
   --font-RobotoMedium:RobotoMedium;
+  --font-Londrina:Londrina;
 }

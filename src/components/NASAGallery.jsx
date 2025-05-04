@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Get_APOD } from "../services/NasaApi";
-import axios from "axios";
-const NASAGallery = ()=>{
-   const [images,setImages] = useState([]);
+import { Context } from "../services/Context";
 
+const NASAGallery = ()=>{
+   const {title,setTitle} = useContext(Context);
+   
    useEffect(()=>{
       const fetchAPODImages = async ()=>{
         try{
