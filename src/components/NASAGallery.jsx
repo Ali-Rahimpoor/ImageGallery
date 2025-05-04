@@ -1,20 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Get_APOD, Get_EARTH, Get_MARS } from "../services/NasaApi";
 import { Context } from "../services/Context";
 import Loading from "./Loading";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
    const [loading,setLoading] = useState(false);
+   const [images,setImages] = useState([]);
    useEffect(()=>{
-      const fetchAPODImages = async ()=>{
+      const fetchAPODImages =  async ()=>{
         try{
             setLoading(true);
-            const {data} = await Get_APOD(1);
+            const {data} = await Get_APOD();
             console.log(data)
-            const imageOnly =
-             data.filter(item=> item.media_type === "image");
-             setImages(imageOnly);
-            //  console.log(imageOnly);
+            setImages(data);
         }catch(err){
          console.error(err);
         }
@@ -62,36 +60,24 @@ const NASAGallery = ()=>{
          default:
             throw new Error("NO Title");
       }
-   },[])
+   },[title])
 
    if(loading) return <Loading/>
+   if (images.length === 0) return <div>No images found</div>;
    return(
       <>
-         <section>
-
+         <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
+            {images&&images.map((img,index)=>(
+               <div key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
+                  <img className="w-full h-full rounded object-cover"  src={img.hdurl || img.url} alt="Photo" />
+                  <div className="text-gray-200">
+                  <p className="absolute line-clamp-1 shadow bg-black/20 p-1 text-sm top-3 left-3">{img.title}</p>
+                  <p className="absolute bottom-2 line-clamp-1 right-3 bg-black/20 shadow p-1 font-KarlaBold tracking-wide">{img.date}</p>
+                  </div>
+               </div>
+            ))}
          </section>
 
-
-         {/* {images.map((img)=> (
-            <div>
-               <p>{img.date}</p>
-               <p>{img.title}</p>
-               <p>{img.explanation}</p>
-               {img.copyright &&
-               (<p>
-                  {img.copyright}
-               </p>)}
-                  
-                  {img.media_type ==="video"? null:(
-                     <img 
-                     src={img.hdurl || img.url}
-                     alt="PHOTO"
-                     className="w-52 h-52"
-                     />
-                  )}
-
-            </div> */}
-         {/* ))} */}
       </>
    )
 }
