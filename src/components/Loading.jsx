@@ -1,17 +1,54 @@
+import React from 'react';
+import styled from 'styled-components';
 
-const Loading = ()=>{
-
-   return(
-      <>
-<div role="status" className="mt-20">
-<div className="flex space-x-2 justify-center items-center">
-      <div className="h-3 w-3 bg-gray-600 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-      <div className="h-3 w-3 bg-gray-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-      <div className="h-3 w-3 bg-gray-600 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></div>
-    </div>
-    <span class="sr-only">Loading...</span>
-</div>
-      </>
-   )
+const Loader = () => {
+  return (
+    <StyledWrapper>
+      <div className="loader" />
+    </StyledWrapper>
+  );
 }
-export default Loading;
+
+const StyledWrapper = styled.div`
+  .loader {
+    width: 8px;
+    height: 40px;
+    border-radius: 4px;
+    display: block;
+    background-color: currentColor;
+    margin: 70px auto;
+    position: relative;
+    color: #f2f2f2;
+    animation: animloader 0.3s 0.3s linear infinite alternate;
+  }
+
+  .loader::after,
+  .loader::before {
+    content: '';
+    width: 8px;
+    height: 40px;
+    border-radius: 4px;
+    background: currentColor;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    animation: animloader 0.3s 0.45s linear infinite alternate;
+  }
+
+  .loader::before {
+    left: -20px;
+    animation-delay: 0s;
+  }
+
+  @keyframes animloader {
+    0% {
+      height: 48px;
+    }
+
+    100% {
+      height: 4px;
+    }
+  }`;
+
+export default Loader;

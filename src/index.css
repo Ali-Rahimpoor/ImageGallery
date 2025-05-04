@@ -14,7 +14,7 @@
       background-size: cover;
       object-fit: cover;
       background-attachment: fixed; 
-      @apply absolute top-0 left-0 right-0 w-full h-70 -z-10
+      @apply absolute top-0 left-0 right-0 w-full h-80 -z-10
     }
     ul .group-li{
       @apply backdrop-blur-xs p-8 rounded-xs text-white text-4xl hover:opacity-90 transition-transform cursor-pointer hover:scale-110

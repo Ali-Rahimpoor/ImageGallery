@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Nasa_api_KEY = 'jNuLFxcuwbmygtJAqyDYaRag3bqaPTLfkNWM9YHV';
 
-export const Get_APOD = (count=10)=>{
+export const Get_APOD = (count=9)=>{
    const url =  `https://api.nasa.gov/planetary/apod`;
   return axios.get(url,{
       params:{

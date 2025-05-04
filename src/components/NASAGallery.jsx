@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Get_APOD, Get_EARTH, Get_MARS } from "../services/NasaApi";
 import { Context } from "../services/Context";
-import Loading from "./Loading";
+import Loader from "./Loading";
 import ReactModal from "react-modal";
 import { FaDownload } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
@@ -15,7 +15,7 @@ const NASAGallery = ()=>{
       const fetchAPODImages =  async ()=>{
         try{
             setLoading(true);
-            const {data} = await Get_APOD(3);
+            const {data} = await Get_APOD();
             console.log(data)
             setImages(data);
         }catch(err){
@@ -89,7 +89,7 @@ const NASAGallery = ()=>{
       setSelectedImage(null);
    }
 
-   if(loading) return <Loading/>
+   if(loading) return <Loader/>
    if (!images||images.length === 0) return <div>No images found</div>;
    return(
       <>
