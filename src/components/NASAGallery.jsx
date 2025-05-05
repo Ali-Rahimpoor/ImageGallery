@@ -7,106 +7,27 @@ import { FaDownload } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { saveToCache } from "../utils/Catch";
 import { getFromCache } from "../utils/Catch";
+import { useNasaData } from "../hooks/useNasaData";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
-   const [loading,setLoading] = useState(false);
-   const [images,setImages] = useState([]);
+   const {images,loading,fetchImages} = useNasaData(title)
    const [selectedImage,setSelectedImage] = useState(null);
    const [isModalOpen,setIsModalOpen] = useState(false);
-   useEffect(()=>{
-      const fetchAPODImages =  async ()=>{
-        try{
-            setLoading(true);
-            const cacheKey = 'apod_data';
+   
+   const handleRefresh = ()=>{
+      fetchImages();
+   }
 
-            const cachedAPOD = getFromCache(cacheKey);
-            if(cachedAPOD){
-               setImages(cachedAPOD);
-               return;
-            }
-
-            const {data} = await Get_APOD();
-            console.log(data)
-            saveToCache(cacheKey,data)
-            setImages(data);
-        }catch(err){
-         console.error(err);
-        }
-        finally{
-         setLoading(false)
-        }
-      }
-      const fetchMARSImages = async ()=>{
-         try{
-            setLoading(true);
-            const randomSol =Math.floor((Math.random() * 4000));
-            const cacheKey = `mars_photos`;
-
-            const cachedPhotos = getFromCache(cacheKey);
-            if(cachedPhotos){
-               const shuffled = cachedPhotos.sort(() => 0.5 - Math.random());
-               setImages(shuffled.slice(0, 18));
-               return;
-            }
-
-            const {data} = await Get_MARS(randomSol);
-            console.log(data);
-            const photos = data.photos;
-            saveToCache(cacheKey,photos);
-            const shuffled = photos.sort(() => 0.5 - Math.random());
-            setImages(shuffled.slice(0, 18));
-         }catch(err){
-            console.error(err);
-         }
-         finally{
-            setLoading(false)
-         }
-        
-      }
-      const fetchEARTHImages = async ()=>{
-         try{
-            setLoading(true);
-            const {data} = await Get_EARTH();
-            console.log(data);
-         }catch(err){
-            console.error(err)
-         }
-         finally{
-            setLoading(false)
-         }
-
-      }
-      switch(title){
-         case "APOD":
-            fetchAPODImages();
-            break;
-         case "MARS":
-            fetchMARSImages();
-            break;
-         case "EARTH":
-            fetchEARTHImages();
-            break;
-         default:
-            throw new Error("NO Title");
-      }
-   },[title])
-
-   const handleImageClick = (img)=>{
+   const handleImageClick_APOD = (img)=>{
       setSelectedImage(img);
       setIsModalOpen(true);
    }
+   const handleImageClick_MARS = (img)=>{
+      window.open(img.img_src,"_blank")
+   }
    const handleDownload = ()=>{
       if (!selectedImage) return;
-
       window.open(selectedImage.hdurl || selectedImage.url, '_blank');
-
-      // const imageUrl = selectedImage.hdurl || selectedImage.url;
-      // const link = document.createElement('a');
-      // link.href = imageUrl;
-      // link.download = `nasa-${selectedImage.date || 'image'}.jpg`;
-      // document.body.appendChild(link);
-      // link.click();
-      // document.body.removeChild(link);
    }
    const closeModal = ()=>{
       setIsModalOpen(false)
@@ -119,9 +40,10 @@ const NASAGallery = ()=>{
    return(
       <>
       {title ==='APOD'?(
+         
          <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
             {images&&images.map((img,index)=>(
-               <div onClick={()=>handleImageClick(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
+               <div onClick={()=>handleImageClick_APOD(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
                   <img className="w-full h-full rounded object-cover"  src={img.hdurl || img.url} alt="Photo" />
                   <div className="text-gray-200">
                   <p className="absolute line-clamp-1 shadow bg-black/20 p-1 text-sm top-3 left-3">{img.title}</p>
@@ -130,15 +52,24 @@ const NASAGallery = ()=>{
                </div>
             ))}
          </section>
+
          ):(
+
          <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
-                  {images&&images.map((img,index)=>(
-                     <div key={index}>
-                        <img src={img.img_src} />
+                  {images&&images?.map((img,index)=>(
+                     <div onDoubleClick={()=>{handleImageClick_MARS(img)}} key={index} className="relative cursor-pointer">
+                        <img src={img.img_src} className="w-full h-full rounded object-cover" alt="Photo" />
+                        <div>
+                           <p className="absolute top-3 left-3 bg-black/20 text-gray-200 rounded-sm px-2 py-1">{img?.earth_date || "NODate"}</p>
+                           <p className="absolute bottom-2 p-1 rounded text-xs bg-black/20  right-2 text-gray-200">{img?.camera?.name || "NoName"}</p>
+                        </div>
                      </div>
                   ))}
          </section>
+
       )}
+
+
             <ReactModal
             isOpen={isModalOpen}
             onRequestClose={closeModal}

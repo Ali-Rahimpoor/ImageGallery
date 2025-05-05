@@ -7,7 +7,9 @@ const Header = ()=>{
    return(
       <header className="relative font-Karla">
          <div className="background"></div>
+         <Link to='/home'>
          <Header_svg className="size-52 absolute top-5 z-10 left-10" />
+         </Link>
          <h1 className=" text-7xl backdrop-blur-md p-4 font-KarlaBold text-zinc-800 bg-white/30 text-center"><span className="">NASA</span> Image Gallery</h1>
          <ul className="mt-10 w-[800px] mx-auto p-2 flex items-center justify-around ">
            <li className="group-li">
@@ -16,7 +18,7 @@ const Header = ()=>{
                </Link>
            </li>
            <li className="group-li">
-               <Link to="/Gallery" onClick={()=>setTitle("EARTH")}>
+               <Link to="/Earth-Gallery" onClick={()=>setTitle("")}>
                   EARTH
                </Link>
            </li>
