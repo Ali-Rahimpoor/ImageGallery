@@ -11,11 +11,13 @@ export const Get_APOD = (count=9)=>{
       }
    })
 }
-export const Get_MARS = (rover="curiosity")=>{
-   const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/latest_photos`;
+export const Get_MARS = (sol="1000",page=1)=>{
+   const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos`;
    return axios.get(url,{
       params:{
-         api_key:Nasa_api_KEY
+         api_key:Nasa_api_KEY,
+         sol:sol,
+         page:page
       }
    });
 }

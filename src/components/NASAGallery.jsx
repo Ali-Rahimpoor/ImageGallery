@@ -5,6 +5,8 @@ import Loader from "./Loading";
 import ReactModal from "react-modal";
 import { FaDownload } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import { saveToCache } from "../utils/Catch";
+import { getFromCache } from "../utils/Catch";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
    const [loading,setLoading] = useState(false);
@@ -15,8 +17,17 @@ const NASAGallery = ()=>{
       const fetchAPODImages =  async ()=>{
         try{
             setLoading(true);
+            const cacheKey = 'apod_data';
+
+            const cachedAPOD = getFromCache(cacheKey);
+            if(cachedAPOD){
+               setImages(cachedAPOD);
+               return;
+            }
+
             const {data} = await Get_APOD();
             console.log(data)
+            saveToCache(cacheKey,data)
             setImages(data);
         }catch(err){
          console.error(err);
@@ -28,9 +39,22 @@ const NASAGallery = ()=>{
       const fetchMARSImages = async ()=>{
          try{
             setLoading(true);
-            const {data} = await Get_MARS();
-            console.log(data);
+            const randomSol =Math.floor((Math.random() * 4000));
+            const cacheKey = `mars_photos`;
 
+            const cachedPhotos = getFromCache(cacheKey);
+            if(cachedPhotos){
+               const shuffled = cachedPhotos.sort(() => 0.5 - Math.random());
+               setImages(shuffled.slice(0, 18));
+               return;
+            }
+
+            const {data} = await Get_MARS(randomSol);
+            console.log(data);
+            const photos = data.photos;
+            saveToCache(cacheKey,photos);
+            const shuffled = photos.sort(() => 0.5 - Math.random());
+            setImages(shuffled.slice(0, 18));
          }catch(err){
             console.error(err);
          }
@@ -89,10 +113,12 @@ const NASAGallery = ()=>{
       setSelectedImage(null);
    }
 
+   
    if(loading) return <Loader/>
    if (!images||images.length === 0) return <div>No images found</div>;
    return(
       <>
+      {title ==='APOD'?(
          <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
             {images&&images.map((img,index)=>(
                <div onClick={()=>handleImageClick(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
@@ -104,6 +130,15 @@ const NASAGallery = ()=>{
                </div>
             ))}
          </section>
+         ):(
+         <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
+                  {images&&images.map((img,index)=>(
+                     <div key={index}>
+                        <img src={img.img_src} />
+                     </div>
+                  ))}
+         </section>
+      )}
             <ReactModal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
