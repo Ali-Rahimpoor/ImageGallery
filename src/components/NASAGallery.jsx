@@ -1,12 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { Get_APOD, Get_EARTH, Get_MARS } from "../services/NasaApi";
+import { useCallback, useContext,useState } from "react";
 import { Context } from "../services/Context";
 import Loader from "./Loading";
 import ReactModal from "react-modal";
 import { FaDownload } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import { saveToCache } from "../utils/Catch";
-import { getFromCache } from "../utils/Catch";
 import { useNasaData } from "../hooks/useNasaData";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
@@ -70,7 +67,7 @@ const NASAGallery = ()=>{
 
       )}
 
-<nav className="container flex items-center justify-center bg-gradient-to-tl from-zinc-900 to-zinc-600 p-2">
+      <nav className="container flex items-center justify-center bg-gradient-to-tl from-zinc-900 to-zinc-600 p-2">
          <button onClick={handleRefresh} disabled={loading} className="shadow text-xl font-Karla bg-white/5 text-gray-200 px-8 cursor-pointer py-2 rounded">
          {loading ? (
           <span className="animate-spin">↻</span>

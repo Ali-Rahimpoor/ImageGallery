@@ -6,21 +6,25 @@ const EarthGallery = ()=>{
    const [images,setImages] = useState([]);
    const [loading,setLoading] = useState(false);
 
-   useEffect(()=>{
-      const fetchImages = async()=>{
-         try{
-            setLoading(true);
-            const data = await Get_EARTH();
-            setImages(data);
-            console.log(data);
-         }catch(err){
-            console.error(err);
-         }finally{
-            setLoading(false);
-         }
+   const fetchImages = async()=>{
+      try{
+         setLoading(true);
+         const data = await Get_EARTH();
+         setImages(data);
+         console.log(data);
+      }catch(err){
+         console.error(err);
+      }finally{
+         setLoading(false);
       }
+   }
+  useEffect(()=>{
+   fetchImages();
+  },[])
+   const handleRefresh = ()=>{
       fetchImages();
-   },[])
+   }
+
    if(loading) return <Loader/>
    return(
       <>
@@ -32,6 +36,15 @@ const EarthGallery = ()=>{
             </div>
          ))}
       </section>
+      <nav className="container flex items-center justify-center bg-gradient-to-tl from-zinc-900 to-zinc-600 p-2">
+         <button onClick={handleRefresh} disabled={loading} className="shadow text-xl font-Karla bg-white/5 text-gray-200 px-8 cursor-pointer py-2 rounded">
+         {loading ? (
+          <span className="animate-spin">↻</span>
+        ) : (
+          <span>↻ Refresh</span>
+        )}
+         </button>
+      </nav>
       </>
    )
 
