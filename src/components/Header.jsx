@@ -42,7 +42,7 @@ const Header = ()=>{
                   <Link className="py-10 px-2"  to="/Gallery" onClick={()=>setTitle('APOD')}>APOD</Link>
                </li>
                <li className="bg-emerald-700 font-RobotoBold tracking-wider text-lg p-3 rounded-md rounded-b-none hover:pb-8 transition-all">
-                  <Link className="py-10 px-5" to="/Gallery" onClick={()=>setTitle('')}>Earth</Link>
+                  <Link className="py-10 px-5" to="/Gallery-Earth">Earth</Link>
                </li>
                <li className="text-lg font-RobotoBold  bg-amber-700 p-3 rounded-md rounded-b-none hover:pb-8 transition-all">
                   <Link className="py-10 px-2"  to="/Gallery" onClick={()=>setTitle('MARS')}>MARS</Link>

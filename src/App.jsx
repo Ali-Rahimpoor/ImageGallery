@@ -7,7 +7,8 @@ import React,{Suspense,lazy} from "react"
 import Loader from "./components/Loading"
 import { ErrorBoundary } from "react-error-boundary"
 import ErrorFallback from "./components/ErrorFallback"
-const Lazy_NASAGallery = lazy(()=> import('./components/NASAGallery'))
+const Lazy_NASAGallery = lazy(()=> import('./components/NASAGallery'));
+const Lazy_EarthGallery = lazy(()=> import('./components/EarthGallery'));
 function App() {
   const [title,setTitle] = useState(null);
 
@@ -45,6 +46,13 @@ function App() {
               </Suspense>
             </ErrorBoundary>}
           />
+          <Route path="/Gallery-Earth"
+          element={
+          <ErrorBoundary>
+            <Suspense fallback={<Loader/>}>
+              <Lazy_EarthGallery/>
+            </Suspense>
+          </ErrorBoundary>} />
         </Routes>
       </main>
     

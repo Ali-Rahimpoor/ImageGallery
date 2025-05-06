@@ -21,7 +21,19 @@ export const Get_MARS = (sol="1000",page=1)=>{
       }
    });
 }
-export const Get_EARTH = (count=18)=>{
-   const url =  `https://picsum.photos/v2/list?page=1&limit=${count}`;
-   return axios.get(url);
-}
+export const Get_EARTH = (count = 18, width = 500, height = 400) => {
+   const images = [];
+ 
+   for (let i = 0; i < count; i++) {
+     const seed = Math.random().toString(36).substring(2, 10); // تولید seed تصادفی
+     const url = `https://picsum.photos/seed/${seed}/${width}/${height}`;
+ 
+     images.push({
+       id: seed,
+       url,
+     });
+   }
+ 
+   return images;
+ };
+ 
