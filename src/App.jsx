@@ -19,9 +19,7 @@ function App() {
         title,
         setTitle
     }} >
-
       <Header/>
-
       <main>
         <Routes>
           <Route 

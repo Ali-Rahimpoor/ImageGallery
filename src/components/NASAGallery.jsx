@@ -10,11 +10,12 @@ import { getFromCache } from "../utils/Catch";
 import { useNasaData } from "../hooks/useNasaData";
 const NASAGallery = ()=>{
    const {title} = useContext(Context);
-   const {images,loading,fetchImages} = useNasaData(title)
+   const [refreshFlag,setRefreshFlag] = useState(0);
+   const {images,loading,fetchImages} = useNasaData(title,refreshFlag,setRefreshFlag)
    const [selectedImage,setSelectedImage] = useState(null);
    const [isModalOpen,setIsModalOpen] = useState(false);
-   
    const handleRefresh = ()=>{
+      setRefreshFlag(1);
       fetchImages();
    }
 
@@ -40,8 +41,8 @@ const NASAGallery = ()=>{
    return(
       <>
       {title ==='APOD'?(
-         
-         <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
+
+         <section className="container font-Karla mt-2 p-2 gap-8 grid grid-cols-3">
             {images&&images.map((img,index)=>(
                <div onClick={()=>handleImageClick_APOD(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
                   <img className="w-full h-full rounded object-cover"  src={img.hdurl || img.url} alt="Photo" />
@@ -55,7 +56,7 @@ const NASAGallery = ()=>{
 
          ):(
 
-         <section className="container font-Karla mt-5 p-2 gap-8 grid grid-cols-3">
+         <section className="container font-Karla mt-2 p-2 gap-8 grid grid-cols-3">
                   {images&&images?.map((img,index)=>(
                      <div onDoubleClick={()=>{handleImageClick_MARS(img)}} key={index} className="relative cursor-pointer">
                         <img src={img.img_src} className="w-full h-full rounded object-cover" alt="Photo" />
@@ -69,7 +70,15 @@ const NASAGallery = ()=>{
 
       )}
 
-
+<nav className="container flex items-center justify-center bg-gradient-to-tl from-zinc-900 to-zinc-600 p-2">
+         <button onClick={handleRefresh} disabled={loading} className="shadow text-xl font-Karla bg-white/5 text-gray-200 px-8 cursor-pointer py-2 rounded">
+         {loading ? (
+          <span className="animate-spin">↻</span>
+        ) : (
+          <span>↻ Refresh (Skip Cache)</span>
+        )}
+         </button>
+      </nav>
             <ReactModal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
