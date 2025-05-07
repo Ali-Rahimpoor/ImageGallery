@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../services/Context";
+import { useEffect, useState } from "react";
 import { Get_EARTH } from "../services/NasaApi";
-import Loader from "./Loading";
-import SkeletonLoader from "./SkeletonLoader";
+import {SkeletonLoader} from "./SkeletonLoader";
 const EarthGallery = ()=>{
    const [images,setImages] = useState([]);
    const [loading,setLoading] = useState(false);
@@ -15,6 +13,7 @@ const EarthGallery = ()=>{
          setImageLoaded({});
       }catch(err){
          console.error(err);
+         throw new Error(err);
       }finally{
          setLoading(false);
       }

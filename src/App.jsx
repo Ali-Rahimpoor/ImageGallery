@@ -13,7 +13,7 @@ function App() {
   const [title,setTitle] = useState(null);
 
   const handleReset = ()=>{
-    setTitle('APOD');
+    Navigate('/home')
   }
   return (
     <Context.Provider value={{
@@ -48,7 +48,13 @@ function App() {
           />
           <Route path="/Gallery-Earth"
           element={
-          <ErrorBoundary>
+          <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onReset={handleReset}
+          onError={(err,info)=>{
+            console.error(err,info)
+          }}
+          >
             <Suspense fallback={<Loader/>}>
               <Lazy_EarthGallery/>
             </Suspense>

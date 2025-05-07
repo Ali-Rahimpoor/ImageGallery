@@ -1,5 +1,5 @@
 // ttl time to remove => 24 Hour or 2 Hour
-export const saveToCache = (key, data, ttl = 2 * 60 * 60 * 1000) => {
+export const saveToCache = (key, data, ttl = 24 * 60 * 60 * 1000) => {
    const cacheData = {
      data,
      timestamp: new Date().getTime(),
