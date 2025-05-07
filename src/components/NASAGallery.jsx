@@ -17,8 +17,7 @@ const NASAGallery = ()=>{
    }
 
    const handleImageClick_APOD = (img)=>{
-      setSelectedImage(img);
-      setIsModalOpen(true);
+      window.open(img.hdurl || img.url,"_blank")
    }
    const handleImageClick_MARS = (img)=>{
       window.open(img.img_src,"_blank")
@@ -33,15 +32,15 @@ const NASAGallery = ()=>{
    }
 
    
-   if(loading) return <Loader/>
-   if (!images||images.length === 0) return <div>No images found</div>;
+   if(loading || images.length ===0) return <Loader/>
+   // if (!images) throw new Error('No image Found');
    return(
       <>
       {title ==='APOD'?(
 
          <section className="container font-Karla mt-2 p-2 md:gap-8 xs:gap-7 gap-4 grid grid-cols-2 sm:grid-cols-3">
             {images&&images.map((img,index)=>(
-               <div onClick={()=>handleImageClick_APOD(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
+               <div onDoubleClick={()=>handleImageClick_APOD(img)} key={index} className="relative hover:scale-95 transition-transform cursor-pointer">
                   <img className="w-full h-full rounded-md object-cover"  src={img.hdurl || img.url} alt="Photo" />
                   <div className="text-gray-200">
                   <p className="absolute line-clamp-1 shadow md:text-sm  bg-black/20 p-1 text-[10px] xs:text-xs md:top-3 top-1 left-1 md:left-3">{img.title}</p>
@@ -76,6 +75,7 @@ const NASAGallery = ()=>{
         )}
          </button>
       </nav>
+      {/* Not Use */}
             <ReactModal
             isOpen={isModalOpen}
             onRequestClose={closeModal}

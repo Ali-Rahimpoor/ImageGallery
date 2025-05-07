@@ -11,7 +11,7 @@ const Loader = () => {
 
 const StyledWrapper = styled.div`
   .loader {
-    width: 8px;
+    width: 10px;
     height: 40px;
     border-radius: 4px;
     display: block;
@@ -25,7 +25,7 @@ const StyledWrapper = styled.div`
   .loader::after,
   .loader::before {
     content: '';
-    width: 8px;
+    width: 10px;
     height: 40px;
     border-radius: 4px;
     background: currentColor;
