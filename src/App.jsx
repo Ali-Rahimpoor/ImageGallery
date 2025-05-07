@@ -24,7 +24,7 @@ function App() {
       <main>
         <Routes>
           <Route 
-          path="/"
+          path="/ImageGallery"
           element={<Navigate to={'/home'}/>}
           />
           <Route
