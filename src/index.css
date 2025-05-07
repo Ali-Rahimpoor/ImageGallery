@@ -78,4 +78,5 @@
   --font-RobotoLight:RobotoLight;
   --font-RobotoMedium:RobotoMedium;
   --font-Londrina:Londrina;
+  --breakpoint-xs : 400px;
 }
