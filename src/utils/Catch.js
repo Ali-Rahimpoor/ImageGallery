@@ -8,6 +8,7 @@ export const saveToCache = (key, data, ttl = 24 * 60 * 60 * 1000) => {
    localStorage.setItem(key, JSON.stringify(cacheData));
  };
  
+//  Use Ai
  // تابع بازیابی از کش
  export const getFromCache = (key) => {
    const cachedData = localStorage.getItem(key);

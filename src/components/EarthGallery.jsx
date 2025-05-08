@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Get_EARTH } from "../services/NasaApi";
 import {SkeletonLoader} from "./SkeletonLoader";
+import { getFromCache, saveToCache } from "../utils/Catch";
 const EarthGallery = ()=>{
    const [images,setImages] = useState([]);
    const [loading,setLoading] = useState(false);
@@ -8,8 +9,16 @@ const EarthGallery = ()=>{
    const fetchImages = async()=>{
       try{
          setLoading(true);
-         const data = await Get_EARTH();
+
+         const Earth_cacheKey = 'earth_data';
+         const cachedEarth = getFromCache(Earth_cacheKey);
+         if(cachedEarth){
+            setImages(cachedEarth);
+            return;
+         }
+         const data = Get_EARTH();
          setImages(data);
+         saveToCache(Earth_cacheKey,data);
          setImageLoaded({});
       }catch(err){
          console.error(err);
@@ -22,6 +31,7 @@ const EarthGallery = ()=>{
    fetchImages();
   },[])
    const handleRefresh = ()=>{
+      localStorage.removeItem('earth_data');
       fetchImages();
    }
    const handleDownload = (img)=>{

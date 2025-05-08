@@ -56,8 +56,9 @@ const NASAGallery = () => {
 
   if (images.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-64">
+      <div className="flex flex-col items-center justify-center h-64 font-Karla">
         <p className="text-gray-400 text-lg">No images found</p>
+        <h2 className="text-red-400">Go to APOD and click SkipCache in bottom</h2>
         <button 
           className="mt-4 shadow text-xl font-Karla bg-black/75 text-gray-200 px-8 py-2 rounded"
         >

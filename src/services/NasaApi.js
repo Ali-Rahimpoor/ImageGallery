@@ -11,7 +11,7 @@ export const Get_APOD = (count=18)=>{
       }
    })
 }
-export const Get_MARS = (sol="1000",page=1)=>{
+export const Get_MARS = (sol="1000",page=Math.ceil(Math.random()*5))=>{
    const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos`;
    return axios.get(url,{
       params:{
@@ -25,7 +25,7 @@ export const Get_EARTH = (count = 18, width = 500, height = 400) => {
    const images = [];
  
    for (let i = 0; i < count; i++) {
-     const seed = Math.random().toString(36).substring(2, 10); // تولید seed تصادفی
+     const seed = Math.random().toString(36).substring(2, 10); // to Create Random seed for Api
      const url = `https://picsum.photos/seed/${seed}/${width}/${height}`;
  
      images.push({

@@ -39,13 +39,14 @@ export const useNasaData = (title,refreshFlag,setRefreshFlag) =>{
           break;
 
           case "MARS":
+            // Sol mars day
             const randomSol = Math.floor(Math.random() * 4000);
 
             const marsCacheKey = `mars_photos`;
             if(!forceRefresh){
             const cachedMars = getFromCache(marsCacheKey);
             if (cachedMars) {
-              setImages(cachedMars.sort(() => 0.5 - Math.random()).slice(0, 18));
+              setImages(cachedMars.sort(() => 0.5 - Math.random()).slice(0, 12));
               return;
             }
          }
@@ -54,7 +55,7 @@ export const useNasaData = (title,refreshFlag,setRefreshFlag) =>{
             if(!forceRefresh){
             saveToCache(marsCacheKey, marsData.photos);
             }
-            setImages(marsData.photos.sort(() => 0.5 - Math.random()).slice(0, 18));
+            setImages(marsData.sort(() => 0.5 - Math.random()).slice(0, 12));
             break;
 
             default :
