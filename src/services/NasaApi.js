@@ -11,7 +11,7 @@ export const Get_APOD = (count=18)=>{
       }
    })
 }
-export const Get_MARS = (sol="1000",page=Math.ceil(Math.random()*5))=>{
+export const Get_MARS = (sol="1000",page=Math.ceil(Math.random()*2))=>{
    const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos`;
    return axios.get(url,{
       params:{
